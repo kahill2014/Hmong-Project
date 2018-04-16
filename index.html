@@ -1,9 +1,30 @@
 <html>
-    <head>
-        <title>Hmong Project</title>
-        <meta charset="UTF-8">
-    </head>
-    <body>
-        <p>Test SourceTree</p>
-    </body>
+<head>
+	<title>Hmong Project</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+</head>
+<body>
+	<!-- APP CONTENT -->
+	<h1>This is what a Bootstrap header looks like!</h1>
+	<p>Test SourceTree</p>
+
+	<!-- jQuery CDN -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- jQuery local fallback -->
+	<script>window.jQuery || document.write('<script src="/bootstrap/js/jquery.js"><\/script>')</script>
+	<!-- Bootstrap JS CDN -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<!-- Bootstrap JS local fallback -->
+	<script>if(typeof($.fn.modal) === 'undefined') {document.write('<script src="/bootstrap/js/bootstrap.min.js"><\/script>')}</script>
+	<!-- Bootstrap CSS local fallback -->
+	<div id="bootstrapCssTest" class="hidden"></div>
+	<script>
+	$(function() {
+	  if ($('#bootstrapCssTest').is(':visible')) {
+		$("head").prepend('<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">');
+	  }
+	});
+	</script>
+</body>
 </html>
