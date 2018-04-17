@@ -1,8 +1,10 @@
 <?php
+	include 'db_connect.php';
     session_start();
-    $user = $_SESSION['username'];
+	$user = 'hillka28';
+    //$user = $_SESSION['username'];
     
-    include 'db_connect.php';
+    
         
     //This checks to see if a user is logged in or not by seeing if the sessioned username varialble exists.
     //You could change this check to however you want to validate your members, this is just how I did it.
@@ -30,13 +32,13 @@
         ?>
         <br>
         <center>
-        <b><p><a href="inbox.php">Inbox</a> | <a href="compose.php">Compose</a> | <a href="sent.php">Sentbox</a></b>
+        <b><p><a href="inbox.php">Inbox</a> | <a href="send_message.php">Compose</a></b>
         <b><p><?php echo "$pm_count"." of 50 Total  |  "."$percent"."% full"; ?></p></b>
         </center>
         <br>
         <?php
         //This stuff and the while loop will query the database, see if you have messages or not, and display them if you do
-        $query = "SELECT messageId, senderId, title, message FROM messages WHERE recieverId='$userId'";
+        $query = "SELECT messageId, senderId, title, message FROM messages WHERE receiverId='$userId'";
         $sqlinbox = mysql_query($query);
         
         //We have a mysql error, we should probably let somone know about the error, so we should print the error
@@ -62,7 +64,7 @@
             //Then we create a table 80% the total width, with 3 columns, The subject is 75% of the whole table, the sender is 120 pixels (should be plenty) and the select checkboxes only get 25 pixels
             ?>
             <center>
-            <form name="send" method="post" action="delete.php">
+            <form name="send" method="post" action="delete_message.php">
             <table width="80%">
             <tr>
               <td width="75%" valign="top"><p><b><u>Subject</u></b></p></td>
@@ -90,7 +92,7 @@
                 //Here is finally the html output for the message data, the while loop keeps going untill it runs out of messages
                 ?>
                 <tr>
-                  <td width="75%" valign="top"><p><a href="viewmsg.php?msg_id=<?php echo $pm_id; ?>"><?php echo $subject; ?></a></p></td>
+                  <td width="75%" valign="top"><p><a href="view_message.php?msg_id=<?php echo $pm_id; ?>"><?php echo $subject; ?></a></p></td>
                   <td width="120px" valign="top"><p><?php echo $sender; ?></p></td>
                   <td width="25px" valign="top"><input name="pms[]" type="checkbox" value="<?php echo $pm_id; ?>"></td>
                 </tr>

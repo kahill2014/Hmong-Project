@@ -1,8 +1,10 @@
 <?php
-session_start();
-$user = $_SESSION['username'];
+	include 'db_connect.php';
+	session_start();
+	$user = 'hillka28';
+    //$user = $_SESSION['username'];
     
-    include 'db_connect.php';
+    
     
     //This checks to see if a user is logged in or not by seeing if the sessioned username varialble exists.
     //You could change this check to however you want to validate your members, this is just how I did it.
@@ -19,17 +21,25 @@ $user = $_SESSION['username'];
         //Get all of the information about the message with the id number sent through the URL
         $view_msg = mysql_query("SELECT * FROM messages WHERE messageId = '$msg_id'");
         $msg = mysql_fetch_array($view_msg);
+		
+		$sql = mysql_query ("SELECT id FROM users WHERE username='$user'");
+        $row = mysql_fetch_array ($sql);
+		$userId = $row['id'];
         
-        $reciever = $msg['recieverId'];
+        $receiver = $msg['receiverId'];
         $sender = $msg['senderId'];
         $subject = $msg['title'];
         $message = $msg['message'];
+		
+		$sql = mysql_query ("SELECT username FROM users WHERE id='$sender'");
+        $row = mysql_fetch_array ($sql);
+		$senderName = $row['username'];
         
         //If the person who is supposed to recieve the message is the currently logged in user everything is good
-        if($reciever == $user)
+        if($receiver == $userId)
             {
             //The message was recieved, so lets update the message in the database so it wont show up in the sent page any more
-            mysql_query("UPDATE messages SET recieverRead='1' WHERE id = '$msg_id'");
+            mysql_query("UPDATE messages SET receiverRead='1' WHERE messageId = '$msg_id'");
             
             //Query the database to see how many messages the logged in user has, then do a little math
             //Find the percentage that your inbox is full (message count divided by 50)
@@ -47,7 +57,7 @@ $user = $_SESSION['username'];
             ?>
             <br>
             <center>
-            <b><p><a href="inbox.php">Inbox</a> | <a href="compose.php">Compose</a> | <a href="sent.php">Sentbox</a></b>
+            <b><p><a href="inbox.php">Inbox</a> | <a href="senc_message.php">Compose</a></b>
             <b><p><?php echo "$pm_count"." of 50 Total  |  "."$percent"."% full"; ?></p></b>
             </center>
             <br>
@@ -55,7 +65,7 @@ $user = $_SESSION['username'];
             <table width="80%">
               <tr>
                 <td width="120px"><p>From:</p></td>
-                <td width=""><p><a href = "<?php echo "../user/profile.php?user_name=$sender"; ?>"><?php echo $sender; ?></a></p></td>
+                <td width=""><p><a href = "<?php echo "../user/profile.php?user_name=$senderName"; ?>"><?php echo $senderName; ?></a></p></td>
               </tr>
               
               <tr>
