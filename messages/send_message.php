@@ -18,8 +18,8 @@
         //Query the database to see how many messages the logged in user has, then do a little math
         //Find the percentage that your inbox is full (message count divided by 50)
         //50 messages maximum, you can change that
-        $sql = mysql_query ("SELECT id, pm_count FROM users WHERE username='$user'");
-        $row = mysql_fetch_array ($sql);
+        $sql = "SELECT id, pm_count FROM users WHERE username='$user'";
+        $row = ($db->query($sql))->fetch_assoc();
         $pm_count = $row['pm_count'];
 		$userId = $row['id'];
         
@@ -39,13 +39,13 @@
 
 		if (isset($_POST['username']) && isset($_POST['subject']) && isset($_POST['message'])){
 			$receiver = htmlspecialchars($_POST['username'], ENT_QUOTES); // Strip out special html characters including single and double quote
-			$receiver = mysql_real_escape_string($receiver); //Escape any characters that could be used in an sql injection attack
+			$receiver = $db->real_escape_string($receiver); //Escape any characters that could be used in an sql injection attack
 			
 			$subject = htmlspecialchars($_POST['subject'], ENT_QUOTES);
-			$subject = mysql_real_escape_string($subject);
+			$subject = $db->real_escape_string($subject);
 			
 			$message = htmlspecialchars($_POST['message'], ENT_QUOTES);
-			$message = mysql_real_escape_string($message);
+			$message = $db->real_escape_string($message);
 		}
 		
 		else {
@@ -90,8 +90,8 @@
             else
                 {
                 //Are the trying to send a message to a real user or to something they just made up?
-                $user_check = mysql_query("SELECT username FROM users WHERE username='$receiver'");
-                $user_check = mysql_num_rows($user_check);
+                $user_sql = "SELECT username FROM users WHERE username='$receiver'";
+                $user_check = ($db->query($user_sql))->num_rows;
                 
                 //The user is real and not made up if this is true
                 if($user_check <= '0')
@@ -103,28 +103,28 @@
                 else
                     {
 						//Get their private message count
-                        $sql = mysql_query ("SELECT id, pm_count FROM users WHERE username='$receiver'");
-                        $row = mysql_fetch_array ($sql);
+                        $sql = "SELECT id, pm_count FROM users WHERE username='$receiver'";
+                        $row = ($db->query($sql))->fetch_assoc();
                         $pm_count = $row['pm_count'];
-						$receiverId = $row['id'];
+			$receiverId = $row['id'];
                         
                         //You cant have more than 50 private messages, if they try sending a message to a user with a full inbox return an error message
                         if($pm_count == '50')
                             {
-								echo 'The user you are trying to send a message to has 50 private messages, sorry but we cant send your message untill that user deletes some of their messages.';
-								$error = 1;
+				echo 'The user you are trying to send a message to has 50 private messages, sorry but we cant send your message untill that user deletes some of their messages.';
+				$error = 1;
                             }
                             
                         else if ($error == 0)
                             {    
-								//And not we stick the message in the database with all the correct information
-								mysql_query("INSERT INTO messages (receiverId, senderId, title, message) VALUES('$receiverId', '$userId', '$subject', '$message')") or die (mysql_error());
-								//Add 1 to the pm count, update the receiver with the new pm count
-								$pm_count++;
-								mysql_query("UPDATE users SET pm_count='$pm_count' WHERE username='$receiver'");
+				//And not we stick the message in the database with all the correct information
+				$db->query("INSERT INTO messages (receiverId, senderId, title, message) VALUES('$receiverId', '$userId', '$subject', '$message')") or die ($db->error());
+				//Add 1 to the pm count, update the receiver with the new pm count
+				$pm_count++;
+				$db->query("UPDATE users SET pm_count='$pm_count' WHERE username='$receiver'");
 								
-								//Let the user know everything went ok.
-								echo "<p><b>You have successfully sent a private message!</b></p><br>";
+				//Let the user know everything went ok.
+				echo "<p><b>You have successfully sent a private message!</b></p><br>";
                             }
                     }
                 }

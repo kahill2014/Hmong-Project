@@ -19,33 +19,33 @@
         $msg_id = $_REQUEST['msg_id'];
         
         //Get all of the information about the message with the id number sent through the URL
-        $view_msg = mysql_query("SELECT * FROM messages WHERE messageId = '$msg_id'");
-        $msg = mysql_fetch_array($view_msg);
+        $view_msg = $db->query("SELECT * FROM messages WHERE messageId = '$msg_id'");
+        $msg = $view_msg->fetch_assoc();
 		
-		$sql = mysql_query ("SELECT id FROM users WHERE username='$user'");
-        $row = mysql_fetch_array ($sql);
-		$userId = $row['id'];
+	$sql = "SELECT id FROM users WHERE username='$user'";
+        $row = ($db->query($sql))->fetch_assoc();
+	$userId = $row['id'];
         
         $receiver = $msg['receiverId'];
         $sender = $msg['senderId'];
         $subject = $msg['title'];
         $message = $msg['message'];
 		
-		$sql = mysql_query ("SELECT username FROM users WHERE id='$sender'");
-        $row = mysql_fetch_array ($sql);
-		$senderName = $row['username'];
+	$sql = $db->query("SELECT username FROM users WHERE id='$sender'");
+        $row = $sql->fetch_assoc();
+	$senderName = $row['username'];
         
         //If the person who is supposed to recieve the message is the currently logged in user everything is good
         if($receiver == $userId)
             {
             //The message was recieved, so lets update the message in the database so it wont show up in the sent page any more
-            mysql_query("UPDATE messages SET receiverRead='1' WHERE messageId = '$msg_id'");
+            $db->query("UPDATE messages SET receiverRead='1' WHERE messageId = '$msg_id'");
             
             //Query the database to see how many messages the logged in user has, then do a little math
             //Find the percentage that your inbox is full (message count divided by 50)
             //50 messages maximum, you can change that
-            $sql = mysql_query ("SELECT pm_count FROM users WHERE username='$user'");
-            $row = mysql_fetch_array ($sql);
+            $sql = $db->query("SELECT pm_count FROM users WHERE username='$user'");
+            $row = $sql->fetch_assoc();
             $pm_count = $row['pm_count'];
             
             //This is the math to figure out the percentage.

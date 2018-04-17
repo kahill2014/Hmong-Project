@@ -1,10 +1,8 @@
 <?php
 	include 'db_connect.php';
-    session_start();
+    	session_start();
 	$user = 'hillka28';
     //$user = $_SESSION['username'];
-    
-    
         
     //This checks to see if a user is logged in or not by seeing if the sessioned username varialble exists.
     //You could change this check to however you want to validate your members, this is just how I did it.
@@ -18,8 +16,8 @@
         //Query the database to see how many messages the logged in user has, then do a little math
         //Find the percentage that your inbox is full (message count divided by 50)
         //50 messages maximum, you can change that
-        $sql = mysql_query ("SELECT id, pm_count FROM users WHERE username='$user'");
-        $row = mysql_fetch_array ($sql);
+        $sql = "SELECT id, pm_count FROM users WHERE username='$user'";
+        $row = ($db->query($sql))->fetch_assoc();
         $pm_count = $row['pm_count'];
 		$userId = $row['id'];
         
@@ -33,24 +31,24 @@
         <br>
         <center>
         <b><p><a href="inbox.php">Inbox</a> | <a href="send_message.php">Compose</a></b>
-        <b><p><?php echo "$pm_count"." of 50 Total  |  "."$percent"."% full"; ?></p></b>
+        <b><p><?php echo $pm_count." of 50 Total  |  "."$percent"."% full"; ?></p></b>
         </center>
         <br>
         <?php
         //This stuff and the while loop will query the database, see if you have messages or not, and display them if you do
         $query = "SELECT messageId, senderId, title, message FROM messages WHERE receiverId='$userId'";
-        $sqlinbox = mysql_query($query);
+        $sqlinbox = $db->query($query);
         
         //We have a mysql error, we should probably let somone know about the error, so we should print the error
         if(!$sqlinbox)
             {
             ?>
-            <p><?php print '$query: '.$query.mysql_error();?></p>
+            <p><?php print '$query: '.$query->error();?></p>
             <?php
             }
         
         //There are no rows found for the user that is logged in, so that either means they have no messages or something broke, lets assume them they have no messages
-        elseif (!mysql_num_rows($sqlinbox) )
+        elseif ($sqlinbox->num_rows <= 0)
             {
             ?>
             <center><p><b>You have no messages to display</b></p></center>
@@ -74,16 +72,17 @@
             <?php
             //Since everything is good so far and we earlier did a query to get all the message information we need to display the information. 
             //This while loop goes through the array outputting all of the message information
-            while($inbox = mysql_fetch_array($sqlinbox))
+            while($inbox = $sqlinbox->fetch_assoc())
                 {
 				
                 //These are the variables we get from the array as it is going through the messages, we have the id of the private message, we have the person who sent the message, we have the subject of the message, and yeah thats it
                 $pm_id = $inbox['messageId'];
                 $senderId = $inbox['senderId'];
                 $subject = $inbox['title'];
-				$sql = mysql_query ("SELECT username FROM users WHERE id='$senderId'");
-				$row = mysql_fetch_array ($sql);
-				$sender = $row['username'];
+		
+		$sql = "SELECT username FROM users WHERE id='$senderId'";
+		$row = $db->query($sql)->fetch_assoc();
+		$sender = $row['username'];
                 
                 //So lets show the subject and make that a link to the view message page, we will send the message id through the URL to the view message page so the message can be displayed
                 //And also let the person see who sent it to them, if you want you can make that some sort of a link to view more stuff about the user, but Im not doing that here, I did it for my game though, similar to the viewmsg.php page but a different page, and with the senders id
