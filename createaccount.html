@@ -1,0 +1,62 @@
+<html>
+<head>
+	<title>Hmong Project</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="pageheader.css">
+</head>
+<body>
+	<!-- jQuery CDN -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<!-- jQuery local fallback -->
+	<script>window.jQuery || document.write('<script src="/bootstrap/js/jquery.js"><\/script>')</script>
+	<!-- Bootstrap JS CDN -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<!-- Bootstrap JS local fallback -->
+	<script>if(typeof($.fn.modal) === 'undefined') {document.write('<script src="/bootstrap/js/bootstrap.min.js"><\/script>')}</script>
+	<!-- Bootstrap CSS local fallback -->
+	<div id="bootstrapCssTest" class="hidden"></div>
+	<script>
+	$(function() {
+	  if ($('#bootstrapCssTest').is(':visible')) {
+		$("head").prepend('<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">');
+	  }
+	});
+	</script>
+	<form id="register-form">
+	
+	  <div class="form-group">
+		<label for="RegisterFirstName">First Name</label>
+		<input type="text" class="form-control" id="RegisterFirstName" placeholder="First Name" required>
+	  </div>
+	  
+	  <div class="form-group">
+		<label for="RegisterLastName">Last Name</label>
+		<input type="text" class="form-control" id="RegisterLastName" placeholder="Last Name" required>
+	  </div>
+	  
+	  <div class="form-group">
+		<label for="RegisterEmail">Email address</label>
+		<input type="email" class="form-control" id="RegisterEmail" aria-describedby="emailHelp" placeholder="Enter email" required>
+		<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+	  </div>
+	  
+	  <div class="form-group">
+		<label for="RegisterPassword">Password</label>
+		<input type="password" class="form-control" id="RegisterPassword" placeholder="Password" required>
+	  </div>
+	 
+	  <div class="form-group">
+		<label for="RegisterPassword2">Re-enter Password</label>
+		<input type="password" class="form-control" id="RegisterPassword2" placeholder="Password" required>
+	  </div>
+	  
+	   <button type="submit" class="btn btn-primary">Create Account</button>
+	  
+	
+	</form>
+		
+</body>
+</html>
