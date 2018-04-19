@@ -1,10 +1,10 @@
-<!-- Default View -->
+<!-- Login View -->
 <?php
     if (!isset($_SESSION['email'])) {
 ?>
 <div class="container">
     <!-- REQUIRES ACTION -->
-    <form class="form-horizontal" action='../login/login.php?mode=checkLogin' method='post'>
+    <form class="form-horizontal" action='../login/index.php?mode=checkLogin' method='post'>
         <div class="form-group">
         <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
@@ -40,6 +40,8 @@
 <?php
     } else {
 ?>
+    <!-- Add dashboard html code here -->
+    <!-- If user is valid display dashboard -->
     <p>Valid User</p>
 <?php
     }

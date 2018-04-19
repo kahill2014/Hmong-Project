@@ -15,6 +15,7 @@
                 $_SESSION['email'] = $data['email'];
             }
             include('../login/pageFiles/pageheader.php');
+            include('../login/pageFiles/pagenav.php');
             include('../login/views/defaultview.php');
             include('../login/pageFiles/pagefooter.php');
             break;
