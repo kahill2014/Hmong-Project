@@ -11,7 +11,7 @@ function checkValidUser() {
     //prepare sql statement
     $sql = "SELECT email, password from `users` WHERE email='$email' AND password='$password'";
     //define values for parameter
-    $values = array('$email', '$password');
+    $values = array('email'=>$email, 'password'=>$password);
     $result = getOneRecord($sql, $values);
     return $result;
 }
@@ -23,7 +23,7 @@ function getOneRecord($sql, $parameter = null) {
     //execute the SQL statement
     $statement->execute($parameter);
     //return the result
-    $result = $statement->fetch(FETCH::FETCH_ASSOC);
+    $result = $statement->fetch(PDO::FETCH_ASSOC);
     return $result;
 }
 
