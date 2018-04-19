@@ -2,10 +2,9 @@
 //Check to see if the username and password are valid
 function checkValidUser() {
     //validate user
-    $sql = "SELECT username, password from `hmong_project` WHERE username=:username
-            AND pwd=:pwd";
+    $sql = "SELECT email, password from `users` WHERE email='$email' AND password='$password'";
     //define values for parameters
-    $values = array(':username'=>$_POST['username'], ':pwd'=>md5($_POST['pwd']));
+    $values = array('$email'=>$_POST['email'], '$password'=>$_POST['password']);
     $result = getOneRecord($sql, $values);
     return $result;
 }
@@ -17,7 +16,7 @@ function getOneRecord($sql, $parameter = null) {
     //execute the SQL statement
     $statement->execute($parameter);
     //return the result
-    $result = $statement->fetch(PDO::FETCH::FETCH_ASSOC);
+    $result = $statement->fetch(PDO, FETCH::FETCH_ASSOC);
     return $result;
 }
 
