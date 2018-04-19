@@ -28,6 +28,6 @@ function getAllRecords($sql, $parameter = null) {
     $statement->execute($parameter);
     //return the result
     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-    return $result
+    return $result;
 }
 ?>
