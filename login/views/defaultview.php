@@ -4,7 +4,7 @@
 ?>
 <div class="container">
     <!-- REQUIRES ACTION -->
-    <form class="form-horizontal">
+    <form class="form-horizontal" action='login.php?mode=checkLogin' method='post'>
         <div class="form-group">
         <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
