@@ -1,6 +1,6 @@
 <!-- Default View -->
 <?php
-    if (!isset($_SESSION['user'])) {
+    if (!isset($_SESSION['email'])) {
 ?>
 <div class="container">
     <!-- REQUIRES ACTION -->
