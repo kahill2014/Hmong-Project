@@ -1,7 +1,9 @@
 <?php
     session_start();
     //include database connection info
+    include('databaseConnection/pdo_connect.php');
     //include functions
+    include('login/models/model.php');
     //read the main task using the primary key 'mode'
     $mode = '';
     if (isset($_REQUEST['mode']))
