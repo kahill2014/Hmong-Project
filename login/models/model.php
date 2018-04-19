@@ -2,9 +2,16 @@
 //Check to see if the username and password are valid
 function checkValidUser() {
     //validate user
+    //gather post data
+    $email=$_POST['email'];
+    $password=$_POST['password'];
+    //protect against injection attack
+    $email = stripslashes($email);
+    $password = stripslashes($password);
+    //prepare sql statement
     $sql = "SELECT email, password from `users` WHERE email='$email' AND password='$password'";
-    //define values for parameters
-    $values = array('$email'=>$_POST['email'], '$password'=>$_POST['password']);
+    //define values for parameter
+    $values = array('$email', '$password');
     $result = getOneRecord($sql, $values);
     return $result;
 }
@@ -16,7 +23,7 @@ function getOneRecord($sql, $parameter = null) {
     //execute the SQL statement
     $statement->execute($parameter);
     //return the result
-    $result = $statement->fetch(PDO, FETCH::FETCH_ASSOC);
+    $result = $statement->fetch(FETCH::FETCH_ASSOC);
     return $result;
 }
 
@@ -27,7 +34,7 @@ function getAllRecords($sql, $parameter = null) {
     //execute the SQL statement
     $statement->execute($parameter);
     //return the result
-    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+    $result = $statement->fetchAll(PDO::FETCH_COLUMN);
     return $result;
 }
 ?>
