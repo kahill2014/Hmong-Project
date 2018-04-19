@@ -2,7 +2,8 @@
 //Check to see if the username and password are valid
 function checkValidUser() {
     //validate user
-    $sql = "SELECT"; //sql statement here
+    $sql = "SELECT username, password from `hmong_project` WHERE username=:username
+            AND pwd=:pwd";
     //define values for parameters
     $values = array(':username'=>$_POST['username'], ':pwd'=>md5($_POST['pwd']));
     $result = getOneRecord($sql, $values);
