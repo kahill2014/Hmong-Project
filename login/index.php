@@ -11,7 +11,8 @@
     switch ($mode) {
         case 'register':
             $data = registerUser();
-            if (isset($data) && isset($data['email'])) {
+            if (isset($data) && isset($data['id'])) {
+                $_SESSION['id'] = $data['id'];
                 $_SESSION['user'] = $data['lastName'].', '.$data['firstName'];
                 $_SESSION['email'] = $data['email'];
                 $_SESSION['username'] = $data['username'];
@@ -22,8 +23,11 @@
             break;
         case 'checkLogin':
             $data = checkValidUser();
-            if (isset($data) && isset($data['email'])) {
+            if (isset($data) && isset($data['id'])) {
+                $_SESSION['id'] = $data['id'];
+                $_SESSION['user'] = $data['lastName'].', '.$data['firstName'];
                 $_SESSION['email'] = $data['email'];
+                $_SESSION['username'] = $data['username'];
             }
             include('../login/pageFiles/pageheader.php');
             include('../login/pageFiles/pagenav.php');
