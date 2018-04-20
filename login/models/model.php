@@ -16,6 +16,29 @@ function checkValidUser() {
     return $result;
 }
 
+//Register user
+function registerUser() {
+    //gather post data
+    $lastName=$_POST['lastName'];
+    $firstName=$_POST['firstName'];
+    $email=$_POST['email'];
+    $username=$_POST['username'];
+    $password=$_POST['password'];
+    //protect against injection attack
+    $lastName=stripslashes($lastName);
+    $firstName=stripslashes($firstName);
+    $email=stripslashes($email);
+    $username=stripslashes($username);
+    $password=md5(stripslashes($password));
+    //prepare sql statement
+    $sql = "INSERT INTO `users`(`id`, `lastName`, `firstName`, `email`, `username`, `password`, `pm_count`)
+            VALUES ('0','$lastName','$firstName','$email','$username','$password','0')";
+    //define values for parameter
+    $values = array('lastName'=>$lastName, 'firstName'=>$firstName,
+                    'email'=>$email, 'username'=>$username, 'password'=>$password);
+    $result = getOneRecord($sql, $values);
+    return $result;
+
 //Retrieve ONLY one record from the database
 function getOneRecord($sql, $parameter = null) {
     global $db;
