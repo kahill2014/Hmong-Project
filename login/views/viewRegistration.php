@@ -3,7 +3,7 @@
     if (!isset($_SESSION['email'])) {
 ?>
 <div class="container">
-    <form class="form-horizontal" action='../login/index.php?mode=register' method='post'>
+    <form class="form-horizontal" action='../index.php?mode=register' method='post'>
         <div class="form-group">
             <label for="RegisterFirstName">First Name</label>
             <input type="text" class="form-control" id="RegisterFirstName" placeholder="First Name" name='firstName' required>
