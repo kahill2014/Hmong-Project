@@ -6,10 +6,11 @@ function checkValidUser() {
     $email=$_POST['email'];
     $password=$_POST['password'];
     //protect against injection attack
-    $email = stripslashes($email);
-    $password = stripslashes($password);
+    $email=stripslashes($email);
+    $password=md5(stripslashes($password));
     //prepare sql statement
-    $sql = "SELECT email, password from `users` WHERE email='$email' AND password='$password'";
+    $sql = "SELECT id, lastName, firstName, email, username, password from `users`
+            WHERE email='$email' AND password='$password'";
     //define values for parameter
     $values = array('email'=>$email, 'password'=>$password);
     $result = getOneRecord($sql, $values);
