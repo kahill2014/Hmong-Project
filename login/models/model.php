@@ -38,6 +38,7 @@ function registerUser() {
                     'email'=>$email, 'username'=>$username, 'password'=>$password);
     $result = getOneRecord($sql, $values);
     return $result;
+}
 
 //Retrieve ONLY one record from the database
 function getOneRecord($sql, $parameter = null) {
