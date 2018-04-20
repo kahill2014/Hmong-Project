@@ -18,6 +18,7 @@
                     <li><a href="#"><span class="glyphicon glyphicon-user"></span>&nbspProfile </a></li>
                     <li><a href="#"><span class="glyphicon glyphicon-picture"></span>&nbspGallery </a></li>
 					<li><a href="#"><span class="glyphicon glyphicon-inbox"></span>&nbspMessages </a></li>
+					<li><a href="../login/index.php?mode=logout"><span class="glyphicon glyphicon-log-out"></span>&nbspLogout </a></li>
                 </ul>
                 <form class="nav navbar-form navbar-right">
                     <div class="form-group">
