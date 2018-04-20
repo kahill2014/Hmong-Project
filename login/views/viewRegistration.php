@@ -1,6 +1,6 @@
 <!-- Registration View -->
 <?php
-    if (!isset($_SESSION['email'])) {
+    if (!isset($_SESSION['id'])) {
 ?>
 <div class="container">
     <form class="form-horizontal" action='../index.php?mode=register' method='post'>
