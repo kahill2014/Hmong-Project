@@ -1,5 +1,7 @@
 <?php
 if(isset($_POST["submit"])){
+    $country = $_POST['country'];
+    $year = $_POST['year'];
     $check = getimagesize($_FILES["image"]["tmp_name"]);
     if($check !== false){
         $image = $_FILES['image']['tmp_name'];
@@ -26,7 +28,7 @@ if(isset($_POST["submit"])){
         $dataTime = date("Y-m-d H:i:s");
         
         //Insert image content into database
-        $insert = $db->query("INSERT into `images` (`image`, `created`) VALUES ('$imgContent', '$dataTime')");
+        $insert = $db->query("INSERT into `images` (`image`, `created`, `country`, `year`) VALUES ('$imgContent', '$dataTime', '$country', '$year')");
         if($insert){
             echo "File uploaded successfully.";
         }else{
@@ -36,4 +38,7 @@ if(isset($_POST["submit"])){
         echo "Please select an image file to upload.";
     }
 }
+
 ?>
+<!-- Just to go back because I am lazy -->
+<a href="index.php">Add another?</a>
