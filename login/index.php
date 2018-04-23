@@ -9,7 +9,8 @@
     if (isset($_REQUEST['mode']))
         $mode = $_REQUEST['mode'];
     switch ($mode) {
-        case 'register':
+//Function views are here
+        case 'registerUser':
             $data = registerUser();
             if (isset($data) && isset($data['id'])) {
                 $_SESSION['id'] = $data['id'];
@@ -34,6 +35,7 @@
             include('../login/views/defaultview.php');
             include('../login/pageFiles/pagefooter.php');
             break;
+        //if mode is set to logout, destroy session and cookies
         case 'logout':
             //destroy session variables and display login form
             session_destroy();
@@ -43,6 +45,14 @@
             include('../login/views/defaultview.php');
             include('../login/pageFiles/pagefooter.php');
             break;
+//View pages are here
+        case 'viewRegistration':
+            include('../login/pageFiles/pageheader.php');
+            include('../login/pageFiles/pagenav.php');
+            include('../login/views/viewRegistration.php');
+            include('../login/pageFiles/pagefooter.php');
+            break;
+//Default view if no mode is set, which defaults to the login page
         default:
             include('../login/pageFiles/pageheader.php');
             include('../login/views/defaultview.php');

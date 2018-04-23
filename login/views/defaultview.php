@@ -30,7 +30,7 @@
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-primary">Sign in</button>
                 <div>
-                    </br><a class="btn btn-primary" href="../login/views/viewRegistration.php" role="button">Sign up</a>
+                    </br><a class="btn btn-primary" href="../login/index.php?mode=viewRegistration" role="button">Sign up</a>
                 </div>
                 </br><a href="forgotpassword.html" id="forgot-password">Forgot Password?<a>
             </div>
