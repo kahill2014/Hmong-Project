@@ -38,7 +38,10 @@ function registerUser() {
     $values = array('lastName'=>$lastName, 'firstName'=>$firstName,
                     'email'=>$email, 'username'=>$username, 'password'=>$password);
     $result = getOneRecord($sql, $values);
-    return $result;
+    if (mysqli_num_rows($result) >= 1)
+        echo "User name already in use";
+    else
+        return $result;
 }
 
 //Retrieve ONLY one record from the database
