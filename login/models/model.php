@@ -31,17 +31,26 @@ function registerUser() {
     $email=stripslashes($email);
     $username=stripslashes($username);
     $password=md5(stripslashes($password));
-    //prepare sql statement
-    $sql = "INSERT INTO `users`(`id`, `lastName`, `firstName`, `email`, `username`, `password`, `pm_count`)
-            VALUES ('0','$lastName','$firstName','$email','$username','$password','0')";
+    //prepare sql statement to check to see if email and username are in use
+    $sqlCheck = "SELECT email, username from `users`
+                 WHERE email='$email' AND username='$username'";
     //define values for parameter
-    $values = array('lastName'=>$lastName, 'firstName'=>$firstName,
-                    'email'=>$email, 'username'=>$username, 'password'=>$password);
-    $result = getOneRecord($sql, $values);
-    if (mysqli_num_rows($result) >= 1)
+    $valuesCheck = array('email'=>$email, 'password'=>$password);
+    $resultCheck = getOneRecord($sqlCheck, $valuesCheck);
+    if (mysqli_num_rows($resultCheck) >= 1)
+        //If email and password are in use, print this
         echo "User name already in use";
-    else
+    else {
+        //Else if result comes back as zero, add information
+        //prepare sql statement
+        $sql = "INSERT INTO `users`(`id`, `lastName`, `firstName`, `email`, `username`, `password`, `pm_count`)
+                VALUES ('0','$lastName','$firstName','$email','$username','$password','0')";
+        //define values for parameter
+        $values = array('lastName'=>$lastName, 'firstName'=>$firstName,
+                        'email'=>$email, 'username'=>$username, 'password'=>$password);
+        $result = getOneRecord($sql, $values);
         return $result;
+    }
 }
 
 //Retrieve ONLY one record from the database
