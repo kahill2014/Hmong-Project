@@ -145,5 +145,9 @@ color: #999;
 }
 .profile{
     padding-top: 75px;
+    padding-left: 75px;
     width: 100%;
+}
+.edit-button{
+    padding-left: 100px;
 }
