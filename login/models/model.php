@@ -37,6 +37,12 @@ function registerUser() {
     //define values for parameter
     $values = array('lastName'=>$lastName, 'firstName'=>$firstName,
                     'email'=>$email, 'username'=>$username, 'password'=>$password);
+    getOneRecord($sql, $values);
+    //Run another sql query so that items from the db are able to be setup for the session
+    $sql = "SELECT id, lastName, firstName, email, username, password from `users`
+            WHERE email='$email' AND password='$password'";
+    //define values for parameter
+    $values = array('email'=>$email, 'password'=>$password);
     $result = getOneRecord($sql, $values);
     return $result;
 }
