@@ -8,6 +8,11 @@
     $mode = '';
     if (isset($_REQUEST['mode']))
         $mode = $_REQUEST['mode'];
+    else {
+        include('../login/pageFiles/pageheader.php');
+        include('../login/views/defaultview.php');
+        include('../login/pageFiles/pagefooter.php');
+    }
     switch ($mode) {
 //Function views are here
         case 'registerUser':
@@ -48,7 +53,6 @@
 //View pages are here
         case 'viewRegistration':
             include('../login/pageFiles/pageheader.php');
-            include('../login/pageFiles/pagenav.php');
             include('../login/views/viewRegistration.php');
             include('../login/pageFiles/pagefooter.php');
             break;
