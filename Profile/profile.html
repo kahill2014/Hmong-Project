@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<!--This is a template. I still need to adjust some sizes so it doesnt look so small-->
+<html lang="en">
+    <head>
+        <title>Hmong History Project</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Bootstrap CSS CDN -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- Our Custom CSS -->
+        <link rel="stylesheet" href="css/custom.css">
+        <link rel="stylesheet" href="mainPage.css">
+    </head>
+    <body>
+        <div class="wrapper">
+
+            <nav id="sidebar" class="active">
+                <!-- Sidebar Header -->
+                <div class="sidebar-header">
+                    <h3>Page Title</h3>
+                </div>
+
+                <!-- Sidebar Links -->
+                <ul class="list-unstyled components">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#">Browse</a></li>
+                    <li><a href="#">Messages</a></li>
+                    <li><!-- Link with dropdown items -->
+                        <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Search</a>
+                        <ul class="collapse list-unstyled" id="homeSubmenu">
+                            <div class="searchbar">
+                                <input type="text" placeholder="Search..">
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="optradio">By Category</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="optradio">By Year</label>
+                            </div>
+                            <div class="radio">
+                                <label><input type="radio" name="optradio">By Tag</label>
+                            </div>
+                        </ul>
+                </ul>
+            </nav>
+            <div id="content">
+                <button type="button" id="sidebarCollapse" class="container">
+                    <div class="container" onclick="myFunction(this)">
+                        <div class="bar1"></div>
+                        <div class="bar2"></div>
+                        <div class="bar3"></div>
+                    </div>
+                </button>
+            </div>
+            <div class="profile">
+                <div class="row">
+                <div class="col-xs-12 col-sm-6 col-md-6">
+                <div class="well well-sm">
+                <div class="row">
+                    <div class="col-sm-6 col-md-4">
+                        <img src="http://placehold.it/380x500" alt="" class="img-rounded img-responsive" />
+                    </div>
+                    <div class="col-sm-6 col-md-8">
+                        <h4>
+                            User's Name
+                        </h4>
+                        <small>User's Location <i class="glyphicon glyphicon-map-marker">
+                        </i></small>
+                        <p>
+                            <i class="glyphicon glyphicon-envelope"></i>  email@example.com
+                            <br />
+                            <i class="glyphicon glyphicon-education"></i><a>  User Occupation</a>
+                            <br />
+                            <i class="glyphicon glyphicon-comment"></i>  Goals with Page</p>
+                            
+                        </div>
+                    </div>
+                </div>
+                </div>
+                </div>
+                </div>
+        </div>
+        <!-- jQuery CDN -->
+        <script src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
+        <!-- Bootstrap Js CDN -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> 
+        <script type="text/javascript">
+             $(document).ready(function () {
+                 $('#sidebarCollapse').on('click', function () {
+                     $('#sidebar').toggleClass('active');
+                 });
+             });
+        </script>
+        <script>
+            function myFunction(x) {
+            x.classList.toggle("change");
+            }
+        </script>
+    </body>  
+</html>
+
