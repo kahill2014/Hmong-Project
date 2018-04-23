@@ -14,7 +14,7 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="#"><span class="glyphicon glyphicon-home"></span>&nbspDashboard </a></li>
+                    <li><a href="../login/index.php"><span class="glyphicon glyphicon-home"></span>&nbspDashboard </a></li>
                     <li><a href="#"><span class="glyphicon glyphicon-user"></span>&nbspProfile </a></li>
                     <li><a href="#"><span class="glyphicon glyphicon-picture"></span>&nbspGallery </a></li>
 					<li><a href="#"><span class="glyphicon glyphicon-inbox"></span>&nbspMessages </a></li>
