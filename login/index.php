@@ -8,11 +8,6 @@
     $mode = '';
     if (isset($_REQUEST['mode']))
         $mode = $_REQUEST['mode'];
-    else {
-        include('../login/pageFiles/pageheader.php');
-        include('../login/views/defaultview.php');
-        include('../login/pageFiles/pagefooter.php');
-    }
     switch ($mode) {
 //Function views are here
         case 'registerUser':
@@ -59,6 +54,8 @@
 //Default view if no mode is set, which defaults to the login page
         default:
             include('../login/pageFiles/pageheader.php');
+            if (isset($_SESSION['id']))
+                include('../login/pageFiles/pagenav.php');
             include('../login/views/defaultview.php');
             include('../login/pageFiles/pagefooter.php');
             break;
