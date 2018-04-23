@@ -20,6 +20,7 @@
             }
             include('../login/pageFiles/pageheader.php');
             include('../login/pageFiles/pagenav.php');
+            include('../login/views/defaultview.php');
             include('../login/pageFiles/pagefooter.php');
             break;
         case 'checkLogin':
@@ -48,13 +49,14 @@
 //View pages are here
         case 'viewRegistration':
             include('../login/pageFiles/pageheader.php');
-            include('../login/pageFiles/pagenav.php');
             include('../login/views/viewRegistration.php');
             include('../login/pageFiles/pagefooter.php');
             break;
 //Default view if no mode is set, which defaults to the login page
         default:
             include('../login/pageFiles/pageheader.php');
+            if (isset($_SESSION['id']))
+                include('../login/pageFiles/pagenav.php');
             include('../login/views/defaultview.php');
             include('../login/pageFiles/pagefooter.php');
             break;
