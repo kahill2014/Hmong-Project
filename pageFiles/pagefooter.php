@@ -1,4 +1,8 @@
 <!-- Page Footer -->
-        <div id='footer'>&#0169; hmongproject.com</div>
+        <footer class="footer navbar-fixed-bottom text-center">
+            <div class="container"
+                <p>© 2018 Hmong Project</p>
+            </div>
+        </footer>
     </body>
 </html>
