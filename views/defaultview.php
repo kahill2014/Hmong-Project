@@ -4,7 +4,7 @@
 ?>
 <div class="container">
     <!-- REQUIRES ACTION -->
-    <form class="form-horizontal" action='../login/index.php?mode=checkLogin' method='post'>
+    <form class="form-horizontal" action='index.php?mode=checkLogin' method='post'>
         <div class="form-group">
         <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
             <div class="col-sm-10">
@@ -30,7 +30,7 @@
             <div class="col-sm-offset-2 col-sm-10">
                 <button type="submit" class="btn btn-primary">Sign in</button>
                 <div>
-                    </br><a class="btn btn-primary" href="../login/index.php?mode=viewRegistration" role="button">Sign up</a>
+                    </br><a class="btn btn-primary" href="index.php?mode=viewRegistration" role="button">Sign up</a>
                 </div>
                 </br><a href="forgotpassword.html" id="forgot-password">Forgot Password?<a>
             </div>
