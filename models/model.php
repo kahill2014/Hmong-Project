@@ -1,4 +1,34 @@
 <?php
+//Upload Photos
+function uploadPhoto($SESSION_ID) {
+    $country = $_POST['country'];
+    $year = $_POST['year'];
+    $check = getimagesize($_FILES["image"]["tmp_name"]);
+    if($check !== false) {
+        $image = $_FILES['image']['tmp_name'];
+        $imgContent = addslashes(file_get_contents($image));
+        $dataTime = date("Y-m-d H:i:s");
+        //Insert image content into database
+        //prepare sql statement
+        $sql = "INSERT INTO `images` (`image`, `created`, `country`, `year`, `user_id`)
+                VALUES ('$imgContent', '$dataTime', '$country', '$year','$SESSION_ID')";
+        //define values for parameter
+        $values = array('image'=>$imgContent, 'created'=>$dataTime,
+                        'country'=>$country, 'year'=>$year, 'user_id'=>$SESSION_ID);
+        //Execute statement and set the result to $result
+        $result = getOneRecord($sql, $values);
+        return $result;
+    } else
+        return "noPhoto";
+}
+
+//View photos, code used from ../Image_Upload/view.php
+function getAllPhotos() {
+    $sql = "SELECT * FROM `images`";
+    $result = getAllRecords($sql);
+    return $result;
+}
+
 //Check to see if the username and password are valid
 function checkValidUser() {
     //validate user
@@ -65,7 +95,9 @@ function getAllRecords($sql, $parameter = null) {
     //execute the SQL statement
     $statement->execute($parameter);
     //return the result
-    $result = $statement->fetchAll(PDO::FETCH_COLUMN);
+    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
     return $result;
 }
+
 ?>
+
