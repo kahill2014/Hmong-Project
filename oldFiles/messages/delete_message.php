@@ -1,10 +1,9 @@
  <?php
     include 'db_connect.php';
     session_start();
-    header("Location:inbox.php");
+    header("Location:index.php?mode=inbox");
     
-    $user = 'hillka28';
-    //$user = $_SESSION['username'];
+    $user = $_SESSION['username'];
     
     //We do not have a user check on this page, because it seems silly to, you just send data to this page then it directs you right back to inbox
     

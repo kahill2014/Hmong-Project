@@ -1,0 +1,22 @@
+nav {
+	background-color: #36454f
+}
+nav a{
+		color: white;
+}
+#bs-example-navbar-collapse-1 a:hover{
+	background-color: #428BCA;
+	color: white;
+	font-size: 120%;
+}
+.icon-bar{
+	background-color: white;
+}
+form{
+	max-width: 500px;
+	margin: auto;
+	margin-top: 10px;
+	
+	padding: 10px;
+	
+}
