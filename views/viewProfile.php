@@ -15,7 +15,7 @@
             <!--Tab Buttons-->
         <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
             <div class="btn-group" role="group">
-                <button type="button" id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                <button type="button" id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
                     <div class="hidden-xs">Photos</div>
                 </button>
             </div>
@@ -25,11 +25,16 @@
                 </button>
             </div>
             <div class="btn-group" role="group">
-                <button type="button" id="following" class="btn btn-default" href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                <button type="button" id="about" class="btn btn-default" href="#tab3" data-toggle="tab"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>
                     <div class="hidden-xs">About</div>
                 </button>
             </div>
-        </div>
+     	    <div class="btn-group" role="group">
+                <button type="button" id="follow" class="btn btn-default" href="#tab4" data-toggle="tab"><span class="glyphicon glyphicon-globe" aria-hidden="true"></span>
+                    <div class="hidden-xs">Following/Followers</div>
+                </button>
+            </div>
+	</div>
       <!--Tab Content Cycle-->
         <div class="well">
       <div class="tab-content">
