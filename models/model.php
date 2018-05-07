@@ -1,5 +1,20 @@
 <?php
 session_start();
+//Search for specific photos function
+function searchFor() {
+    //searchFilter is the value of the select box in the navbar
+    $searchFilter = $_POST['searchFilter'];
+    //searchString is the value of the search text field
+    $searchString = $_POST['searchString'];
+    //filter search string to only include letters and numbers
+    $searchString = preg_replace("#[^0-9a-z]#i","",$searchString);
+    //prepare sql statement
+    $sql = "SELECT * FROM `images` WHERE $searchFilter LIKE '%$searchString%'";
+    //get query and return as result
+    $result = getAllRecords($sql);
+    return $result;
+}
+
 // Function to get user data for pages that only use a view (rather than also using a function like uploadPhoto)
 function getUserData($_SESSION_ID){
     $sql = "SELECT id, lastName, firstName, email, username, password from `users`
@@ -148,4 +163,3 @@ function callQuery($sql) {
     $statement->execute();
 }
 ?>
-
