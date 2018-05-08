@@ -10,19 +10,6 @@
         $mode = $_REQUEST['mode'];
     switch ($mode) {
 //Function views are here
-    case 'searchResults':
-        $data = searchFor();
-        include('pageFiles/pageheader.php');
-        include('pageFiles/pagenav.php');
-        //display search results here
-        for ($i=0; $i<count($data); $i++){
-            $row = $data[$i];
-            echo '<div class="gallery_product col-lg-4 col-md-3 col-sm-12 filter hdpe">';
-            echo '<img src="data:image/jpeg;base64,'.base64_encode($row['image']).
-                    '" class="img-responsive" height="512px" width="512px"/>';
-            echo '</div>';
-        }
-        break;
 	case 'profile':
 	    include('pageFiles/pageheader.php');
             include('pageFiles/pagenav.php');
