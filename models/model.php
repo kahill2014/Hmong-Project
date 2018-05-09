@@ -17,12 +17,12 @@ function searchFor() {
 
 // Function to get user data for pages that only use a view (rather than also using a function like uploadPhoto)
 function getUserData($_SESSION_ID){
-    $sql = "SELECT id, lastName, firstName, email, username, password from `users`
+    $sql = "SELECT * from `users`
             WHERE id='$_SESSION_ID'";
     //define values for parameter
 //    $values = array('email'=>$email, 'password'=>$password);
     $result = getOneRecord($sql);
-
+    return $result;
 }
 function deleteMessage($pms){
     header('Location: index.php?mode=inbox');
@@ -72,11 +72,35 @@ function uploadPhoto($SESSION_ID) {
         return "noPhoto";
 }
 
+//Get follower data for any user based on their id
+function getUserFollowers($uid){
+    $sql = "SELECT * FROM `following` WHERE followed_id = '$uid'";
+    $result = getAllRecords($sql);
+    return $result;
+}
+
+//Get following data for any user based on their id
+function getUserFollowing($uid){
+    $sql = "SELECT * FROM `following` WHERE follower_id = '$uid'";
+    $result = getAllRecords($sql);
+    return $result;
+}
+
+//View photos from session user
 function getUserPhotos(){
     $user = $_SESSION['id'];
     $sql = "SELECT * FROM `images` WHERE user_id = $user";
     $result = getAllRecords($sql);
     return $result;    
+}
+function getFollowerPhotos(){
+    $user = $_SESSION['id'];
+    $sql = "SELECT `image` 
+	    FROM `images`, `following` 
+	    WHERE `user_id` = `followed_id` AND `follower_id` = $user 
+            ORDER BY `created` DES";
+    $result = getAllRecords($sql);
+    return $result;
 }
 
 //View photos, code used from ../Image_Upload/view.php
