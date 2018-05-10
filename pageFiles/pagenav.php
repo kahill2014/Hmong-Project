@@ -21,17 +21,20 @@
 					<li><a href="index.php?mode=viewUploadPhoto"><span class="fas fa-camera-retro"></span>&nbspUpload Photo</a></li>
 					<li><a href="index.php?mode=logout"><span class="glyphicon glyphicon-log-out"></span>&nbspLogout </a></li>
                 </ul>
-                <form class="nav navbar-form navbar-right" action="index.php?mode=searchResults" method="post" enctype="multipart/form-data">
+                <form class="nav navbar-form navbar-search navbar-right" action="index.php?mode=searchResults" method="post" enctype="multipart/form-data" role="search">
                     <div class="form-group">
+                        <input type="text" class="form-control" name="searchString" placeholder="Search">
                         <div class="form-group">
-                            <select class="form-control" name="searchFilter">
-                                <option value="country" selected>Country</option>
+                            <select class="form-control" name="searchFilter" role="menu">
+                                <option value="all">All</option>
+                                <option value="country">Country</option>
                                 <option value="year">Year</option>
                             </select>
                         </div>
-                        <input type="text" class="form-control" name="searchString" placeholder="Search">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-search btn-primary">Submit</button>
+                        </div>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
