@@ -9,7 +9,11 @@ function searchFor() {
     //filter search string to only include letters and numbers
     $searchString = preg_replace("#[^0-9a-z]#i","",$searchString);
     //prepare sql statement
-    $sql = "SELECT * FROM `images` WHERE $searchFilter LIKE '%$searchString%'";
+    if ($searchFilter == 'all') {
+        $sql = "SELECT * FROM `images` WHERE `country` LIKE '%$searchString%' OR `year` LIKE '%$searchString%' OR `description` LIKE '%$searchString%'";
+    } else {
+        $sql = "SELECT * FROM `images` WHERE $searchFilter LIKE '%$searchString%'";
+    }
     //get query and return as result
     $result = getAllRecords($sql);
     return $result;
