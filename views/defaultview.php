@@ -39,10 +39,7 @@
 </div>
 <?php
     } else {
-?>
-    <!-- Add dashboard html code here -->
-    <!-- If user is valid display dashboard -->
-    <p>Valid User</p>
-<?php
+    include('./views/viewCarousel.php');
+    echo '<h1>Update default view code once dashboard is complete</h1>';
     }
 ?>

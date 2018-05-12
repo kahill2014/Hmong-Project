@@ -1,5 +1,19 @@
 <?php
 session_start();
+
+// Get number of unread messaages for active user
+function getUnreadMessageCount($uid){
+    $unreadTotal = 0;
+    $sql = "SELECT receiverRead, receiverId FROM `messages` WHERE receiverId = '$uid'";
+    $result = getAllRecords($sql);
+    for($i = 0; $i < count($result); $i++){
+	if($result[$i]['receiverRead'] == 0){
+	    $unreadTotal++;
+	}
+    }
+    return $unreadTotal;
+}
+
 //Search for specific photos function
 function searchFor() {
     //searchFilter is the value of the select box in the navbar
@@ -9,10 +23,20 @@ function searchFor() {
     //filter search string to only include letters and numbers
     $searchString = preg_replace("#[^0-9a-z]#i","",$searchString);
     //prepare sql statement
-    $sql = "SELECT * FROM `images` WHERE $searchFilter LIKE '%$searchString%'";
+	if ($searchString == '') {
+		return 'emptyString';
+	}
+	if ($searchFilter == 'all') {
+	$sql = "SELECT * FROM `images` WHERE `country` LIKE '%$searchString%' OR `description` LIKE '%$searchString%'";
+	} else {
+	    $sql = "SELECT * FROM `images` WHERE $searchFilter LIKE '%$searchString%'";
+	}
     //get query and return as result
     $result = getAllRecords($sql);
-    return $result;
+    if (count($result) > 0)
+    	return $result;
+    else
+	return 'emptyResult';
 }
 
 // Function to get user data for pages that only use a view (rather than also using a function like uploadPhoto)
@@ -87,6 +111,9 @@ function getUserFollowing($uid){
 }
 
 //View photos from session user
+function deletePhotos(){
+	echo 'HELLO';
+}
 function getUserPhotos(){
     $user = $_SESSION['id'];
     $sql = "SELECT * FROM `images` WHERE user_id = $user";
@@ -95,10 +122,10 @@ function getUserPhotos(){
 }
 function getFollowerPhotos(){
     $user = $_SESSION['id'];
-    $sql = "SELECT `image` 
+    $sql = "SELECT `image`
 	    FROM `images`, `following` 
-	    WHERE `user_id` = `followed_id` AND `follower_id` = $user 
-            ORDER BY `created` DES";
+	    WHERE `user_id` = `followed_id` AND `follower_id` = $user
+            ORDER BY `created` DESC";
     $result = getAllRecords($sql);
     return $result;
 }
@@ -142,20 +169,38 @@ function registerUser() {
     $email=stripslashes($email);
     $username=stripslashes($username);
     $password=md5(stripslashes($password));
-    //prepare sql statement
-    $sql = "INSERT INTO `users`(`id`, `lastName`, `firstName`, `email`, `username`, `password`, `pm_count`)
-            VALUES ('0','$lastName','$firstName','$email','$username','$password','0')";
-    //define values for parameter
-    $values = array('lastName'=>$lastName, 'firstName'=>$firstName,
-                    'email'=>$email, 'username'=>$username, 'password'=>$password);
-    getOneRecord($sql, $values);
-    //Run another sql query so that items from the db are able to be setup for the session
-    $sql = "SELECT id, lastName, firstName, email, username, password from `users`
-            WHERE email='$email' AND password='$password'";
-    //define values for parameter
-    $values = array('email'=>$email, 'password'=>$password);
-    $result = getOneRecord($sql, $values);
-    return $result;
+    //check to see if username or email is already in use
+    //check email first
+    $sql = "SELECT email FROM `users` WHERE email='$email'";
+    $values = array('email'=>$email);
+    $emailStatus = getAllRecords($sql, $values);
+    //check username next
+    $sql = "SELECT username FROM `users` WHERE username='$username'";
+    $values = array('username'=>$username);
+    $usernameStatus = getAllRecords($sql, $values);
+    if (count($emailStatus) == 0 && count($usernameStatus) == 0) {
+        //If credentials aren't in use, prepare sql statement
+        $sql = "INSERT INTO `users`(`id`, `lastName`, `firstName`, `email`, `username`, `password`, `pm_count`)
+                VALUES ('0','$lastName','$firstName','$email','$username','$password','0')";
+        //define values for parameter
+        $values = array('lastName'=>$lastName, 'firstName'=>$firstName,
+                        'email'=>$email, 'username'=>$username, 'password'=>$password);
+        getOneRecord($sql, $values);
+        //Run another sql query so that items from the db are able to be setup for the session
+        $sql = "SELECT id, lastName, firstName, email, username, password from `users`
+                WHERE email='$email' AND password='$password'";
+        //define values for parameter
+        $values = array('email'=>$email, 'password'=>$password);
+        $result = getOneRecord($sql, $values);
+        return $result;
+    } else {
+        if (count($emailStatus) > 0 && count($usernameStatus) == 0)
+            return 'Email is already in use';
+        if (count($emailStatus) == 0 && count($usernameStatus) > 0)
+            return 'Username is already in use';
+        if (count($emailStatus) > 0 && count($usernameStatus) > 0)
+            return 'Email and username is already in use';
+    }
 }
 
 //Retrieve ONLY one record from the database

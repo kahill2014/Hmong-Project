@@ -14,25 +14,29 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="index.php"><span class="glyphicon glyphicon-home"></span>&nbspDashboard </a></li>
+                    <li><a href="index.php?mode=dashboard"><span class="glyphicon glyphicon-home"></span>&nbspDashboard </a></li>
                     <li><a href="index.php?mode=profile"><span class="glyphicon glyphicon-user"></span>&nbspProfile </a></li>
                     <li><a href="index.php?mode=gallery"><span class="glyphicon glyphicon-picture"></span>&nbspGallery </a></li>
-					<li><a href="index.php?mode=inbox"><span class="glyphicon glyphicon-inbox"></span>&nbspMessages </a></li>
+					<li><a href="index.php?mode=inbox"><span class="glyphicon glyphicon-inbox"></span>&nbspMessages (<?php echo $messageCount; ?>)</a></li>
 					<li><a href="index.php?mode=viewUploadPhoto"><span class="fas fa-camera-retro"></span>&nbspUpload Photo</a></li>
 					<li><a href="index.php?mode=logout"><span class="glyphicon glyphicon-log-out"></span>&nbspLogout </a></li>
                 </ul>
-                <form class="nav navbar-form navbar-right" action="index.php?mode=searchResults" method="post" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <div class="form-group">
-                            <select class="form-control" name="searchFilter">
-                                <option value="country" selected>Country</option>
-                                <option value="year">Year</option>
-                            </select>
-                        </div>
-                        <input type="text" class="form-control" name="searchString" placeholder="Search">
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                </form>
+<form class="nav navbar-form navbar-search navbar-right" action="index.php?mode=searchResults" method="post" enctype="multipart/form-data" role="search">
+    <div class="form-group">
+        <input type="text" class="form-control" name="searchString" placeholder="Search">
+        <div class="form-group">
+            <select class="form-control" name="searchFilter" role="menu">
+                <option value="all">All</option>
+                <option value="country">Location</option>
+                <option value="year">Year</option>                                                                                                                                                              
+                <option value="description">Description</option>
+            </select>         
+        </div>                
+        <div class="form-group">
+            <button type="submit" class="btn btn-search btn-primary">Submit</button>
+        </div>                
+    </div>                    
+</form> 
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
