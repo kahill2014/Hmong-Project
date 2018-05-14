@@ -77,6 +77,8 @@ echo $pm_id; echo $userId;
 function uploadPhoto($SESSION_ID) {
     $country = $_POST['country'];
     $year = $_POST['year'];
+    $description = $_POST['description'];
+    $tags = $_POST['tags'];
     $check = getimagesize($_FILES["image"]["tmp_name"]);
     if($check !== false) {
         $image = $_FILES['image']['tmp_name'];
@@ -84,8 +86,8 @@ function uploadPhoto($SESSION_ID) {
         $dataTime = date("Y-m-d H:i:s");
         //Insert image content into database
         //prepare sql statement
-        $sql = "INSERT INTO `images` (`image`, `created`, `country`, `year`, `user_id`)
-                VALUES ('$imgContent', '$dataTime', '$country', '$year','$SESSION_ID')";
+        $sql = "INSERT INTO `images` (`image`, `created`, `country`, `year`, `user_id`, `description`, `tags`)
+                VALUES ('$imgContent', '$dataTime', '$country', '$year','$SESSION_ID', '$description', '$tags')";
         //define values for parameter
         $values = array('image'=>$imgContent, 'created'=>$dataTime,
                         'country'=>$country, 'year'=>$year, 'user_id'=>$SESSION_ID);

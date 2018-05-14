@@ -23,6 +23,14 @@
         <select class="form-control"id = "year" name = "year"></select>
     </div>
     <div class="form-group">
+	<label for="description">Description:</label>
+	<textarea style="min-height:150px;"type="text" class="form-control" name="description" id="description" placeholder="Enter a description about your photo"></textarea>
+    </div>
+    <div class="form-group">
+ 	<label for="tags">Tags:</label>
+	<input class="form-control" type="text" name="tags" id="tokenfield-typeahead" placeholder="Enter a tag followed by a space" />
+    </div>
+    <div class="form-group">
         <label for="fileinput">Select Image</label>
         <input type="file" name="image" id="fileinput"/>
     </div>
