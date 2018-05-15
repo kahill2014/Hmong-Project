@@ -8,15 +8,24 @@ function searchFor() {
     $searchString = $_POST['searchString'];
     //filter search string to only include letters and numbers
     $searchString = preg_replace("#[^0-9a-z]#i","",$searchString);
-    //prepare sql statement
-    if ($searchFilter == 'all') {
-        $sql = "SELECT * FROM `images` WHERE `country` LIKE '%$searchString%' OR `year` LIKE '%$searchString%' OR `description` LIKE '%$searchString%'";
-    } else {
+    //if searchString is empty, return empty to function call
+    if ($searchString == '')
+        return 'emptyString';
+    //continue if searchString is not empty and prepare sql statement
+    //if searchFilter option is set to all, search all sql image columns
+    //else search for searchString in searchFilter columns, i.e. country, year, description
+    if ($searchFilter == 'all')
+        $sql = "SELECT * FROM `images` WHERE `country` LIKE '%$searchString%'
+                OR `description` LIKE '%$searchString%'";
+    else
         $sql = "SELECT * FROM `images` WHERE $searchFilter LIKE '%$searchString%'";
-    }
-    //get query and return as result
+    //get query and set as result
     $result = getAllRecords($sql);
-    return $result;
+    //if result is greater than 0, return the result else return emptyResult to function call
+    if (count($result) > 0)
+        return $result;
+    else
+        return 'emptyResult';
 }
 
 // Function to get user data for pages that only use a view (rather than also using a function like uploadPhoto)
@@ -24,7 +33,6 @@ function getUserData($_SESSION_ID){
     $sql = "SELECT * from `users`
             WHERE id='$_SESSION_ID'";
     //define values for parameter
-//    $values = array('email'=>$email, 'password'=>$password);
     $result = getOneRecord($sql);
     return $result;
 }
@@ -39,8 +47,7 @@ function deleteMessage($pms){
     	$pm_count = $row['pm_count'];
     }
 
-    //A foreach loop for each pm in the array, get the values and set it as $pm_id because they were the ones selected for deletion
-    foreach($pms as $num => $pm_id)
+    //A foreach loop for each pm in the array, get the values and set it as $pm_id because they were the ones selected for deletion foreach($pms as $num => $pm_id)
         {
 echo $pm_id; echo $userId;
         //Delete the PM from the database
@@ -107,7 +114,7 @@ function getFollowerPhotos(){
     return $result;
 }
 
-//View photos, code used from ../Image_Upload/view.php
+//Return all photos from the database
 function getAllPhotos() {
     $sql = "SELECT * FROM `images`";
     $result = getAllRecords($sql);
@@ -146,20 +153,38 @@ function registerUser() {
     $email=stripslashes($email);
     $username=stripslashes($username);
     $password=md5(stripslashes($password));
-    //prepare sql statement
-    $sql = "INSERT INTO `users`(`id`, `lastName`, `firstName`, `email`, `username`, `password`, `pm_count`)
-            VALUES ('0','$lastName','$firstName','$email','$username','$password','0')";
-    //define values for parameter
-    $values = array('lastName'=>$lastName, 'firstName'=>$firstName,
-                    'email'=>$email, 'username'=>$username, 'password'=>$password);
-    getOneRecord($sql, $values);
-    //Run another sql query so that items from the db are able to be setup for the session
-    $sql = "SELECT id, lastName, firstName, email, username, password from `users`
-            WHERE email='$email' AND password='$password'";
-    //define values for parameter
-    $values = array('email'=>$email, 'password'=>$password);
-    $result = getOneRecord($sql, $values);
-    return $result;
+    //check to see if username or email is already in use
+    //check email first
+    $sql = "SELECT email FROM `users` WHERE email='$email'";
+    $values = array('email'=>$email);
+    $emailStatus = getAllRecords($sql, $values);
+    //check username next
+    $sql = "SELECT username FROM `users` WHERE username='$username'";
+    $values = array('username'=>$username);
+    $usernameStatus = getAllRecords($sql, $values);
+    if (count($emailStatus) == 0 && count($usernameStatus) == 0) {
+        //If credentials aren't in use, prepare sql statement
+        $sql = "INSERT INTO `users`(`id`, `lastName`, `firstName`, `email`, `username`, `password`, `pm_count`)
+                VALUES ('0','$lastName','$firstName','$email','$username','$password','0')";
+        //define values for parameter
+        $values = array('lastName'=>$lastName, 'firstName'=>$firstName,
+                        'email'=>$email, 'username'=>$username, 'password'=>$password);
+        getOneRecord($sql, $values);
+        //Run another sql query so that items from the db are able to be setup for the session
+        $sql = "SELECT id, lastName, firstName, email, username, password from `users`
+                WHERE email='$email' AND password='$password'";
+        //define values for parameter
+        $values = array('email'=>$email, 'password'=>$password);
+        $result = getOneRecord($sql, $values);
+        return $result;
+    } else {
+        if (count($emailStatus) > 0 && count($usernameStatus) == 0)
+            return 'Email is already in use';
+        if (count($emailStatus) == 0 && count($usernameStatus) > 0)
+            return 'Username is already in use';
+        if (count($emailStatus) > 0 && count($usernameStatus) > 0)
+            return 'Email and username is already in use';
+    }
 }
 
 //Retrieve ONLY one record from the database
