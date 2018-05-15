@@ -1,5 +1,19 @@
 <?php
 session_start();
+
+// Get number of unread messaages for active user
+function getUnreadMessageCount($uid){
+    $unreadTotal = 0;
+    $sql = "SELECT receiverRead, receiverId FROM `messages` WHERE receiverId = '$uid'";
+    $result = getAllRecords($sql);
+    for($i = 0; $i < count($result); $i++){
+	if($result[$i]['receiverRead'] == 0){
+	    $unreadTotal++;
+	}
+    }
+    return $unreadTotal;
+}
+
 //Search for specific photos function
 function searchFor() {
     //searchFilter is the value of the select box in the navbar
@@ -64,6 +78,8 @@ echo $pm_id; echo $userId;
 function uploadPhoto($SESSION_ID) {
     $country = $_POST['country'];
     $year = $_POST['year'];
+    $description = $_POST['description'];
+    $tags = $_POST['tags'];
     $check = getimagesize($_FILES["image"]["tmp_name"]);
     if($check !== false) {
         $image = $_FILES['image']['tmp_name'];
@@ -71,8 +87,8 @@ function uploadPhoto($SESSION_ID) {
         $dataTime = date("Y-m-d H:i:s");
         //Insert image content into database
         //prepare sql statement
-        $sql = "INSERT INTO `images` (`image`, `created`, `country`, `year`, `user_id`)
-                VALUES ('$imgContent', '$dataTime', '$country', '$year','$SESSION_ID')";
+        $sql = "INSERT INTO `images` (`image`, `created`, `country`, `year`, `user_id`, `description`, `tags`)
+                VALUES ('$imgContent', '$dataTime', '$country', '$year','$SESSION_ID', '$description', '$tags')";
         //define values for parameter
         $values = array('image'=>$imgContent, 'created'=>$dataTime,
                         'country'=>$country, 'year'=>$year, 'user_id'=>$SESSION_ID);
@@ -98,6 +114,9 @@ function getUserFollowing($uid){
 }
 
 //View photos from session user
+function deletePhotos(){
+	echo 'HELLO';
+}
 function getUserPhotos(){
     $user = $_SESSION['id'];
     $sql = "SELECT * FROM `images` WHERE user_id = $user";
@@ -106,10 +125,10 @@ function getUserPhotos(){
 }
 function getFollowerPhotos(){
     $user = $_SESSION['id'];
-    $sql = "SELECT `image` 
+    $sql = "SELECT `image`
 	    FROM `images`, `following` 
-	    WHERE `user_id` = `followed_id` AND `follower_id` = $user 
-            ORDER BY `created` DES";
+	    WHERE `user_id` = `followed_id` AND `follower_id` = $user
+            ORDER BY `created` DESC";
     $result = getAllRecords($sql);
     return $result;
 }

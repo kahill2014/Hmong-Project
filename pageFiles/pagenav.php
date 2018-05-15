@@ -14,10 +14,10 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="index.php"><span class="glyphicon glyphicon-home"></span>&nbspDashboard </a></li>
+                    <li><a href="index.php?mode=dashboard"><span class="glyphicon glyphicon-home"></span>&nbspDashboard </a></li>
                     <li><a href="index.php?mode=profile"><span class="glyphicon glyphicon-user"></span>&nbspProfile </a></li>
                     <li><a href="index.php?mode=gallery"><span class="glyphicon glyphicon-picture"></span>&nbspGallery </a></li>
-					<li><a href="index.php?mode=inbox"><span class="glyphicon glyphicon-inbox"></span>&nbspMessages </a></li>
+					<li><a href="index.php?mode=inbox"><span class="glyphicon glyphicon-inbox"></span>&nbspMessages (<?php echo $messageCount; ?>)</a></li>
 					<li><a href="index.php?mode=viewUploadPhoto"><span class="fas fa-camera-retro"></span>&nbspUpload Photo</a></li>
 					<li><a href="index.php?mode=logout"><span class="glyphicon glyphicon-log-out"></span>&nbspLogout </a></li>
                 </ul>
@@ -29,6 +29,7 @@
                                 <option value="all">All</option>
                                 <option value="country">Location</option>
                                 <option value="year">Year</option>
+                                <option value="description">Description</option>
                             </select>
                         </div>
                         <div class="form-group">

@@ -8,21 +8,47 @@
     $mode = '';
     if (isset($_REQUEST['mode']))
         $mode = $_REQUEST['mode'];
+    // Logic for displaying unread message count
+    $messageCount = getUnreadMessageCount($_SESSION['id']);
     switch ($mode) {
 //Function views are here
     case 'searchResults':
         $data = searchFor();
         include('pageFiles/pageheader.php');
         include('pageFiles/pagenav.php');
+	if ($data == 'emptyResult') {
+	echo 'Search returned nothing';
+	break;
+	}
+	if ($data == 'emptyString') {
+	echo 'Enter something to search';
+	break;
+	}
         //display search results here
         for ($i=0; $i<count($data); $i++){
             $row = $data[$i];
-            echo '<div class="gallery_product col-lg-4 col-md-3 col-sm-12 filter hdpe">';
+            echo '<div class="gallery_product col-lg-3 col-md-4 col-sm-12 filter hdpe">';
             echo '<img src="data:image/jpeg;base64,'.base64_encode($row['image']).
                     '" class="img-responsive" height="512px" width="512px"/>';
             echo '</div>';
         }
         break;
+	case 'dashboard':
+            $data = getFollowerPhotos();
+	    include('pageFiles/pageheader.php');
+	    include('pageFiles/pagenav.php');
+	    include('views/viewCarousel.php');
+	    include('views/viewTab1.php');
+	    echo '<h2>Photos of People You follow</h2>';
+	    for ($i=0; $i<count($data); $i++){
+		$row = $data[$i];
+		echo '<div class="gallery_product col-lg-3 col-md-4 col-sm-12 col-xs-12 filter hdpe">';
+		echo  '<img src="data:image/jpeg;base64,'.base64_encode($row['image']).
+                        '" class="img-responsive" height="512px" width="512px"/>';
+		echo '</div></div></div>';
+            }
+	    include('pageFiles/pagefooter.php');
+	break;
 	case 'profile':
 	    include('pageFiles/pageheader.php');
             include('pageFiles/pagenav.php');
@@ -40,6 +66,7 @@
 	    $newFollowingData = array();
 	    $newFollowerData = array();
 	    foreach($followingData as $following){
+
 		array_push($newFollowingData, getUserData($following['followed_id']));
 	    }
 	    foreach($followerData as $follower){
@@ -52,7 +79,6 @@
 		echo '<img src="data:image/jpeg;base64,'.base64_encode($row['image']).
                         '" class="img-responsive" height="512px" width="512px"/>';
 		//test to see if it prints correct user id for future use
-		echo 'user id: '.$row['user_id'];
 		echo '</div>';
             }
                 include('views/viewTab2.php');
@@ -60,12 +86,14 @@
 		include('views/viewTab4.php');
             include('pageFiles/pagefooter.php');
 	    break;
+	
 	case 'inbox':
             include('pageFiles/pageheader.php');
             include('pageFiles/pagenav.php');
 	    include('views/viewMessages.php');
             include('pageFiles/pagefooter.php');
             break;
+	
 	case 'send_message':
             include('pageFiles/pageheader.php');
             include('pageFiles/pagenav.php');
@@ -125,7 +153,7 @@
                 include('views/viewRegistration.php');
                 include('pageFiles/pagefooter.php');
                 break;
-            } else {
+            } else { 
                 if (isset($data) && isset($data['id'])) {
                     $_SESSION['id'] = $data['id'];
                     $_SESSION['user'] = $data['lastName'].', '.$data['firstName'];
