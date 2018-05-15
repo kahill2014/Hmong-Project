@@ -27,7 +27,7 @@
                         <div class="form-group">
                             <select class="form-control" name="searchFilter" role="menu">
                                 <option value="all">All</option>
-                                <option value="country">Country</option>
+                                <option value="country">Location</option>
                                 <option value="year">Year</option>
                             </select>
                         </div>
