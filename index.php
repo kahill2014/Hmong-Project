@@ -106,7 +106,7 @@
                 echo '<div class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">';
                 echo '<img src="data:image/jpeg;base64,'.base64_encode($row['image']).
                         '" class="img-responsive" height="512px" width="512px"/>';
-		echo 'user id: '.$row['user_id'];
+		        echo 'user id: '.$row['user_id'];
                 echo'</div>';
             }
             echo'</div></div>';
@@ -119,17 +119,26 @@
             break;
         case 'registerUser':
             $data = registerUser();
-            if (isset($data) && isset($data['id'])) {
-                $_SESSION['id'] = $data['id'];
-                $_SESSION['user'] = $data['lastName'].', '.$data['firstName'];
-                $_SESSION['email'] = $data['email'];
-                $_SESSION['username'] = $data['username'];
+            if (stripos($data, 'already in use')) {
+                echo $data;
+                include('pageFiles/pageheader.php');
+                include('views/viewRegistration.php');
+                include('pageFiles/pagefooter.php');
+                break;
+            } else {
+                if (isset($data) && isset($data['id'])) {
+                    $_SESSION['id'] = $data['id'];
+                    $_SESSION['user'] = $data['lastName'].', '.$data['firstName'];
+                    $_SESSION['email'] = $data['email'];
+                    $_SESSION['username'] = $data['username'];
+                }
+                include('pageFiles/pageheader.php');
+                if (isset($_SESSION['id']))
+                    include('pageFiles/pagenav.php');
+                include('views/defaultview.php');
+                include('pageFiles/pagefooter.php');
+                break;
             }
-            include('pageFiles/pageheader.php');
-            include('pageFiles/pagenav.php');
-            include('views/defaultview.php');
-            include('pageFiles/pagefooter.php');
-            break;
         case 'checkLogin':
             $data = checkValidUser();
             if (isset($data) && isset($data['id'])) {
