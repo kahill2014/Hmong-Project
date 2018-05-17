@@ -20,3 +20,13 @@ form{
 	padding: 10px;
 	
 }
+@media only screen and (min-width: 320px) {
+  #carousel-example-generic {
+    height: 40%;
+  }
+}
+@media only screen and (min-width: 992px) {
+  #carousel-example-generic {
+    height: 50%;
+  }
+}

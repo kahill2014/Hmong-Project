@@ -2,13 +2,13 @@
             <div class="col-lg-12 col-sm-12">
         <div class="card hovercard">
             <div class="card-background">
-                <img class="card-bkimg" alt="" src="profile-photo.jpg">
+                <img class="card-bkimg" alt="" src="views/profile-photo.jpg">
             <!-- http://lorempixel.com/850/280/people/9/ -->
             </div>
             <div class="useravatar">
-                <img alt="" src="profile-pic.svg">
+                <img alt="" src="views/profile-pic.svg">
             </div>
-            <div class="card-info"> <span class="card-title">User Name</span>
+            <div class="card-info"> <span class="card-title"><?php echo $user_name; ?></span>
 
             </div>
         </div>
@@ -16,7 +16,7 @@
         <div class="btn-pref btn-group btn-group-justified btn-group-lg" role="group" aria-label="...">
             <div class="btn-group" role="group">
                 <button type="button" id="stars" class="btn btn-primary" href="#tab1" data-toggle="tab"><span class="glyphicon glyphicon-picture" aria-hidden="true"></span>
-                    <div class="hidden-xs">Photos</div>
+                    <div class="hidden-xs">My Photos</div>
                 </button>
             </div>
             <div class="btn-group" role="group">

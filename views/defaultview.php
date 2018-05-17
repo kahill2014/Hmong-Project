@@ -1,7 +1,4 @@
 <!-- Login View -->
-<?php
-    if (!isset($_SESSION['id'])) {
-?>
 <div class="container">
     <!-- REQUIRES ACTION -->
     <form class="form-horizontal" action='index.php?mode=checkLogin' method='post'>
@@ -37,9 +34,3 @@
         </div>
     </form>
 </div>
-<?php
-    } else {
-    include('./views/viewCarousel.php');
-    echo '<h1>Update default view code once dashboard is complete</h1>';
-    }
-?>

@@ -7,9 +7,9 @@ function getUnreadMessageCount($uid){
     $sql = "SELECT receiverRead, receiverId FROM `messages` WHERE receiverId = '$uid'";
     $result = getAllRecords($sql);
     for($i = 0; $i < count($result); $i++){
-	if($result[$i]['receiverRead'] == 0){
-	    $unreadTotal++;
-	}
+        if($result[$i]['receiverRead'] == 0){
+            $unreadTotal++;
+        }
     }
     return $unreadTotal;
 }
@@ -22,24 +22,21 @@ function searchFor() {
     $searchString = $_POST['searchString'];
     //filter search string to only include letters and numbers
     $searchString = preg_replace("#[^0-9a-z]#i","",$searchString);
-    //if searchString is empty, return empty to function call
-    if ($searchString == '')
-        return 'emptyString';
-    //continue if searchString is not empty and prepare sql statement
-    //if searchFilter option is set to all, search all sql image columns
-    //else search for searchString in searchFilter columns, i.e. country, year, description
-    if ($searchFilter == 'all')
-        $sql = "SELECT * FROM `images` WHERE `country` LIKE '%$searchString%'
-                OR `description` LIKE '%$searchString%'";
-    else
-        $sql = "SELECT * FROM `images` WHERE $searchFilter LIKE '%$searchString%'";
-    //get query and set as result
+    //prepare sql statement
+	if ($searchString == '') {
+		return 'emptyString';
+	}
+	if ($searchFilter == 'all') {
+	$sql = "SELECT * FROM `images` WHERE `country` LIKE '%$searchString%' OR `description` LIKE '%$searchString%'";
+	} else {
+	    $sql = "SELECT * FROM `images` WHERE $searchFilter LIKE '%$searchString%'";
+	}
+    //get query and return as result
     $result = getAllRecords($sql);
-    //if result is greater than 0, return the result else return emptyResult to function call
     if (count($result) > 0)
-        return $result;
+    	return $result;
     else
-        return 'emptyResult';
+	return 'emptyResult';
 }
 
 // Function to get user data for pages that only use a view (rather than also using a function like uploadPhoto)
@@ -61,9 +58,9 @@ function deleteMessage($pms){
     	$pm_count = $row['pm_count'];
     }
 
-    //A foreach loop for each pm in the array, get the values and set it as $pm_id because they were the ones selected for deletion foreach($pms as $num => $pm_id)
-        {
-echo $pm_id; echo $userId;
+    //A foreach loop for each pm in the array, get the values and set it as $pm_id because they were the ones selected for deletion
+    foreach($pms as $num => $pm_id) {
+        echo $pm_id; echo $userId;
         //Delete the PM from the database
        	callQuery("DELETE FROM messages WHERE messageId='$pm_id' AND receiverId='$userId'");
 
@@ -72,7 +69,7 @@ echo $pm_id; echo $userId;
 
         //Now update the users message count with the new value
         callQuery("UPDATE users SET pm_count='$pm_count' WHERE username='$user'");
-        }
+    }
 }
 // Upload Photos
 function uploadPhoto($SESSION_ID) {
@@ -98,7 +95,10 @@ function uploadPhoto($SESSION_ID) {
     } else
         return "noPhoto";
 }
-
+function delete_image($delete_image){
+    header('Location: index.php?mode=profile');
+    callQuery("DELETE FROM images WHERE id='$delete_image'");
+}
 //Get follower data for any user based on their id
 function getUserFollowers($uid){
     $sql = "SELECT * FROM `following` WHERE followed_id = '$uid'";
@@ -115,7 +115,7 @@ function getUserFollowing($uid){
 
 //View photos from session user
 function deletePhotos(){
-	echo 'HELLO';
+	$sql = "DELETE FROM `images` WHERE id = $id";
 }
 function getUserPhotos(){
     $user = $_SESSION['id'];
@@ -133,9 +133,9 @@ function getFollowerPhotos(){
     return $result;
 }
 
-//Return all photos from the database
+//View photos, code used from ../Image_Upload/view.php
 function getAllPhotos() {
-    $sql = "SELECT * FROM `images`";
+    $sql = "SELECT * FROM `images` ORDER BY `created` DESC";
     $result = getAllRecords($sql);
     return $result;
 }

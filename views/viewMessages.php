@@ -105,7 +105,7 @@
             //Here is a submit button for the form that sends the delete page the message ids in an array
             ?>
             <tr>
-            <td colspan="3"><input type="submit" name="Submit" value="Delete Selected"></td>
+            <td colspan="3"><input class="btn btn-danger" type="submit" name="Submit" value="Delete Selected"></td>
             <td></td>
             <td></td>
             </tr>

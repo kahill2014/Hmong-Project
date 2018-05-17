@@ -30,6 +30,7 @@
                                 <option value="country">Location</option>
                                 <option value="year">Year</option>
                                 <option value="description">Description</option>
+                                <option value="tags">Tags</option>
                             </select>
                         </div>
                         <div class="form-group">

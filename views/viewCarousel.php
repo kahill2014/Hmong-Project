@@ -1,10 +1,10 @@
 <!--Carousel-->
 <?php
 $dataCaro = getAllPhotos();
-$caroSize = count($dataCaro); //set carousel length
+$caroSize = 10; //set carousel length
 ?>
 <div id="banner">
-    <div id="carousel-example-generic" class="carousel slide col-sm-12 col-lg-6 col-lg-offset-3 container-fluid" data-ride="carousel">
+    <div id="carousel-example-generic" class="carousel slide col-sm-12 col-lg-6 col-lg-offset-3" data-ride="carousel">
       <!-- Indicators -->
       <ol class="carousel-indicators">
 	<!-- Always have one dot in carousel, use php for loop below to set n dots -->
